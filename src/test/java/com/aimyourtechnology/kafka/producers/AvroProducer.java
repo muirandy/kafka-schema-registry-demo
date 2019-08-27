@@ -51,8 +51,10 @@ public class AvroProducer {
         try {
             readSchemaFromSchemaRegistry();
         } catch (IOException e) {
+            System.err.println(e);
             throw new SchemaRegistryIoException(e);
         } catch (RestClientException e) {
+            System.err.println(e);
             throw new SchemaRegistryClientException(e);
         }
     }
