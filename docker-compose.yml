@@ -48,7 +48,7 @@ services:
       SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:2181'
 
   connect:
-    image: confluentinc/kafka-connect-datagen:latest
+    image: confluentinc/cp-kafka-connect:5.3.0
     build:
       context: .
       dockerfile: kafka-connect/Dockerfile
@@ -86,12 +86,12 @@ services:
       CONNECT_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor,no.sysco.middleware.kafka.interceptor.zipkin.TracingConsumerInterceptor"
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components"
       CONNECT_LOG4J_LOGGERS: org.apache.zookeeper=ERROR,org.I0Itec.zkclient=ERROR,org.reflections=ERROR
-      CONNECT_PRODUCER_ZIPKIN_SENDER_TYPE: "HTTP"
-      CONNECT_PRODUCER_ZIPKIN_HTTP_ENDPOINT: "http://zipkin:9411/api/v2/spans"
-      CONNECT_PRODUCER_ZIPKIN_LOCAL_SERVICE_NAME: "connect"
-      CONNECT_CONSUMER_ZIPKIN_SENDER_TYPE: "HTTP"
-      CONNECT_CONSUMER_ZIPKIN_HTTP_ENDPOINT: "http://zipkin:9411/api/v2/spans"
-      CONNECT_CONSUMER_ZIPKIN_LOCAL_SERVICE_NAME: "connect"
+#      CONNECT_PRODUCER_ZIPKIN_SENDER_TYPE: "HTTP"
+#      CONNECT_PRODUCER_ZIPKIN_HTTP_ENDPOINT: "http://zipkin:9411/api/v2/spans"
+#      CONNECT_PRODUCER_ZIPKIN_LOCAL_SERVICE_NAME: "connect"
+#      CONNECT_CONSUMER_ZIPKIN_SENDER_TYPE: "HTTP"
+#      CONNECT_CONSUMER_ZIPKIN_HTTP_ENDPOINT: "http://zipkin:9411/api/v2/spans"
+#      CONNECT_CONSUMER_ZIPKIN_LOCAL_SERVICE_NAME: "connect"
 
 
   control-center:
@@ -120,7 +120,7 @@ services:
       PORT: 9021
 
   ksql-server:
-    build: kafka-ksql
+    image: confluentinc/cp-ksql-server:5.3.0
     hostname: ksql-server
     container_name: ksql-server
     depends_on:
